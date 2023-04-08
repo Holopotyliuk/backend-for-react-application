@@ -1,0 +1,24 @@
+Create Table Lists (
+    listId serial,
+    title varchar(255) NOT NULL,
+    PRIMARY KEY (listId)
+);
+
+insert into lists (title) values ('first list')
+
+Create Table tasks(
+    id serial,
+    title varchar(255) NOT NULL,
+    done boolean not null,
+    due_date date,
+    listId int not null,
+    FOREIGN KEY (listId) REFERENCES lists(listId)
+);
+
+insert into tasks (title, done, due_date, listid) values ('Test task', false, '2023-03-31', 1);
+
+ALTER TABLE lists RENAME COLUMN title TO list_title;
+
+select lists.list_title, tasks.id, tasks.title, tasks.done, tasks.due_date from lists  right join tasks on lists.listid=tasks.listid where lists.listid=3
+
+select lists.list_title, count(lists.listid) from lists  right join tasks on lists.listid=tasks.listid where done=false GROUP by lists.list_title
